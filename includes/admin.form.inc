@@ -69,7 +69,7 @@ function islandora_checksum_admin_form(array $form, array &$form_state) {
   $form['islandora_checksum_checksum_retro_enable'] = array(
     '#type' => 'fieldset',
     '#title' => t('Retroactively enable checksums'),
-    '#description' => t('Enabling checksums retroactively regenerates derivatives for all objects in the target collection.'),
+    '#description' => t('Enabling checksums retroactively, regenerates derivative versions for all objects in the target collection that did not previously have checksum values.'),
   );
   $form['islandora_checksum_checksum_retro_enable']['collection'] = array(
     '#type' => 'select',
