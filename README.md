@@ -19,7 +19,7 @@ Install as usual, see [this](https://drupal.org/documentation/install/modules-th
 
 Enable and set checksum type in Administration » Islandora » Islandora Utility Modules » Checksum (admin/islandora/tools/checksum). To retroactively enable checksums on existing objects, enable and set checksum type if you have not already done so, and choose a collection and click on the 'Enable' button. **Note**: Enabling checksums retroactively regenerates derivatives for all objects in the target collection but only for those without checksum properties.
 
-![Configuration](http://i.imgur.com/5wmU7Nd.png)
+![Configuration](https://cloud.githubusercontent.com/assets/2738244/14559757/1b8e574a-02d9-11e6-9dbe-ba6e03c7a50c.png)
 
 ## Documentation
 
