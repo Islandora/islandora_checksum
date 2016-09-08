@@ -36,7 +36,7 @@ Having problems or solved a problem? Check out the Islandora google groups for a
 
 Current maintainers:
 
-* Maintainer needed
+* [Mark Jordan](https://github.com/mjordan)
 
 ## Development
 
