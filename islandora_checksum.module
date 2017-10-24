@@ -129,34 +129,6 @@ EOF;
 }
 
 /**
- * Query the RI index to get PIDs of all child objects in a collection.
- *
- * @param string $pid
- *   The PID of Islandora collection.
- * @param int $limit
- *   The number of items to return.
- * @param array $slice_params
- *   An optional associative array of parameters to pass in to properly grab
- *   the slice, including:
- *   - 'offset_date': an ISO8601 date to filter items before
- *   - 'offset_pid': a PID to filter items before if dates match.
- *
- * @return array
- *   List of member object PIDs.
- */
-function islandora_checksum_get_collection_members($pid, $limit = 10, $slice_params = array()) {
-  module_load_include('inc', 'islandora', 'includes/utilities');
-  $message = islandora_deprecated('7.x-1.8', t('Code should be updated to use islandora_checksum_get_collection_member_details(), which provides both the PID and createdDate of objects so that accurate slicing of member sets can be performed.'));
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-  $results = islandora_checksum_get_collection_member_details($pid, FALSE, $limit, $slice_params);
-  $members = array();
-  foreach ($results as $result) {
-    $members[] = $member['object']['value'];
-  }
-  return $members;
-}
-
-/**
  * Custom button submit handler.
  */
 function islandora_checksum_apply_retro($form, &$form_state) {
@@ -198,36 +170,6 @@ function islandora_checksum_get_collection_checksum_update_batch($collection_pid
     'progress_message' => t('Time elapsed: @elapsed <br/>Estimated time remaining: @estimate.'),
     'error_message' => t('An error occurred and not all checksums were set.'),
   );
-}
-
-
-/**
- * Sets up the batch.
- *
- * @param string $collection_pid
- *   The PID of the collection to apply checksums to.
- *
- * @return array
- *   The batch.
- */
-function islandora_checksum_enable_retro_checksums($collection_pid) {
-  module_load_include('inc', 'islandora', 'includes/utilities');
-  $message = islandora_deprecated('7.x-1.8', t('As this function relies on getting every member of a collection to build the batch, it can time out or run out of memory when attempting to do so on exceptionally large collections. Code should be changed to use islandora_checksum_get_collection_checksum_update_batch(), which instead does a single batch operation that iterates over object sets.'));
-  trigger_error(filter_xss($message), E_USER_DEPRECATED);
-  $pids = islandora_checksum_get_collection_members($collection_pid);
-  $operations = array();
-  $num_objects = count($pids);
-  foreach ($pids as $pid) {
-    $operations[] = array('islandora_checksum_enable_object_checksums',
-      array($pid, $num_objects),
-    );
-  }
-  $batch = array(
-    'operations' => $operations,
-    'title' => 'Enabling checksums',
-    'finished' => 'islandora_checksum_batch_finished',
-  );
-  return $batch;
 }
 
 /**
