@@ -114,7 +114,6 @@ EOF;
     $ri_query .= <<<EOF
   FILTER(?date > '{$slice_params['offset_date']}'^^xs:dateTime || (?date = '{$slice_params['offset_date']}'^^xs:dateTime && xs:string(?object) > xs:string('info:fedora/{$slice_params['offset_pid']}')))
 }
-ORDER BY ASC(?date) ASC(?object)
 EOF;
   }
   else {
@@ -125,6 +124,10 @@ EOF;
   if ($count) {
     return $tuque->repository->ri->countQuery($ri_query, 'sparql');
   }
+  $ri_query .= <<<EOF
+
+ORDER BY ASC(?date) ASC(?object)
+EOF;
   return $tuque->repository->ri->sparqlQuery($ri_query, $limit);
 }
 
